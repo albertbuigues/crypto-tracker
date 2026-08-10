@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">CryptoCoinsList</string>
+    <string name="best_coins">Best coins</string>
+    <string name="worst_coins">Worst coins</string>
+    <string name="empty_text">Some error happened. Please refresh to load data.</string>
+    <string name="refresh">Refresh</string>
+    <!-- Errors -->
+    <string name="network_error">Check your internet connection and try again</string>
+    <string name="euro_not_found">Could not find the euro rate. Please try again later</string>
+    <string name="generic_error">Something went wrong. Please try again later></string>
+</resources>
