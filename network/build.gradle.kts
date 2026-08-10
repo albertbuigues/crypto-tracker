@@ -14,7 +14,7 @@ val localProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.bitpanda.livechallenge.network"
+    namespace = "com.buiguesortola.albert.cryptotracker"
     compileSdk = 35
 
     buildFeatures {

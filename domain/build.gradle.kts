@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bitpanda.livechallenge.domain"
+    namespace = "com.buiguesortola.albert.cryptotracker"
     compileSdk = 35
 
     defaultConfig {

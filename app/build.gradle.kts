@@ -11,7 +11,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        namespace = "com.bitpanda.livechallenge"
+        namespace = "com.buiguesortola.albert.cryptotracker"
+        applicationId = "com.buiguesortola.albert.cryptotracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
