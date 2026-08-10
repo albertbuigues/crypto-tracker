@@ -1,5 +1,5 @@
-import com.bitpanda.livechallenge.dto.AssetDto
-import com.bitpanda.livechallenge.dto.toCoin
+import com.buiguesortola.cryptotracker.dto.AssetDto
+import com.buiguesortola.cryptotracker.dto.toCoin
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -1,9 +1,9 @@
-import com.bitpanda.livechallenge.api.CryptoApi
-import com.bitpanda.livechallenge.domain.CryptoError
-import com.bitpanda.livechallenge.domain.repository.CryptosRepository
-import com.bitpanda.livechallenge.dto.AssetResponse
-import com.bitpanda.livechallenge.dto.RatesResponse
-import com.bitpanda.livechallenge.repository.CryptoRepositoryImpl
+import com.buiguesortola.cryptotracker.api.CryptoApi
+import com.buiguesortola.cryptotracker.domain.CryptoError
+import com.buiguesortola.cryptotracker.domain.repository.CryptosRepository
+import com.buiguesortola.cryptotracker.dto.AssetResponse
+import com.buiguesortola.cryptotracker.dto.RatesResponse
+import com.buiguesortola.cryptotracker.repository.CryptoRepositoryImpl
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

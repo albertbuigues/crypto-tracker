@@ -1,5 +1,5 @@
-import com.bitpanda.livechallenge.dto.AssetDto
-import com.bitpanda.livechallenge.dto.RateDto
+import com.buiguesortola.cryptotracker.dto.AssetDto
+import com.buiguesortola.cryptotracker.dto.RateDto
 
 private fun createFakeAssetDto(
     id: String = "bitcoin",
