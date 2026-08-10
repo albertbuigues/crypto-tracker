@@ -10,7 +10,7 @@ private val ColorScheme = lightColorScheme(
 )
 
 @Composable
-fun BitpandaLiveChallengeTheme(
+fun CryptoTrackerTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

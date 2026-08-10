@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import com.buiguesortola.cryptotracker.domain.LOADING_TAG
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
-import com.buiguesortola.cryptotracker.ui.theme.BitpandaLiveChallengeTheme
+import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @androidx.compose.runtime.Composable
 fun LoadingScreen() {
@@ -29,7 +29,7 @@ fun LoadingScreen() {
 @androidx.compose.ui.tooling.preview.Preview
 @androidx.compose.runtime.Composable
 private fun PreviewLoadingScreen() {
-    BitpandaLiveChallengeTheme {
+    CryptoTrackerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = BackgroundPrimaryColor

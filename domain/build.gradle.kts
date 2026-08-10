@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buiguesortola.albert.cryptotracker"
+    namespace = "com.buiguesortola.cryptotracker"
     compileSdk = 35
 
     defaultConfig {

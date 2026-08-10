@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.buiguesortola.cryptotracker.ui.screens.CryptoCoinsScreen
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
-import com.buiguesortola.cryptotracker.ui.theme.BitpandaLiveChallengeTheme
+import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BitpandaLiveChallengeTheme {
+            CryptoTrackerTheme {
                 Scaffold(
                     containerColor = BackgroundPrimaryColor
                 ) { padding ->

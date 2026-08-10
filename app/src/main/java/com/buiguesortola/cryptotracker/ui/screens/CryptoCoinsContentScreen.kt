@@ -30,7 +30,7 @@ import com.buiguesortola.cryptotracker.ui.components.StatefulCryptoCoinsListElem
 import com.buiguesortola.cryptotracker.ui.components.StatefulFilterChip
 import com.buiguesortola.cryptotracker.ui.states.CoinUiState
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
-import com.buiguesortola.cryptotracker.ui.theme.BitpandaLiveChallengeTheme
+import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
 fun StatefulCryptoCoinsList(
@@ -96,7 +96,7 @@ private fun StatelessCryptoCoinsList(
 @Preview
 @Composable
 private fun PreviewCoinsList() {
-    BitpandaLiveChallengeTheme {
+    CryptoTrackerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = BackgroundPrimaryColor

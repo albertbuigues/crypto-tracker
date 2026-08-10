@@ -28,7 +28,7 @@ import com.buiguesortola.cryptotracker.R
 import com.buiguesortola.cryptotracker.domain.EMPTY_SCREEN_BTN_TAG
 import com.buiguesortola.cryptotracker.domain.EMPTY_SCREEN_TAG
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
-import com.buiguesortola.cryptotracker.ui.theme.BitpandaLiveChallengeTheme
+import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
 fun StatefulEmptyScreen(
@@ -88,7 +88,7 @@ private fun StatelessEmptyScreen(
 @Preview(showBackground = false)
 @Composable
 private fun PreviewEmptyScreen() {
-    BitpandaLiveChallengeTheme {
+    CryptoTrackerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = BackgroundPrimaryColor

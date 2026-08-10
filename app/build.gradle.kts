@@ -11,8 +11,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        namespace = "com.buiguesortola.albert.cryptotracker"
-        applicationId = "com.buiguesortola.albert.cryptotracker"
+        namespace = "com.buiguesortola.cryptotracker"
+        applicationId = "com.buiguesortola.cryptotracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
