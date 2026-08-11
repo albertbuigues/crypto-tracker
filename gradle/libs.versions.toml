@@ -3,6 +3,7 @@
 agp = "8.13.2"
 kotlin = "2.4.10"
 ksp = "2.3.10"
+buildkonfig = "0.22.0"
 
 # AndroidX
 core-ktx = "1.13.1"
@@ -85,3 +86,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }

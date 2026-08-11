@@ -2,7 +2,8 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.buildkonfig)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -16,37 +17,60 @@ android {
     namespace = "com.buiguesortola.cryptotracker.network"
     compileSdk = 35
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     defaultConfig {
         minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-        val apiToken = localProperties.getProperty("API_TOKEN")
-        buildConfigField("String", "API_TOKEN", "\"$apiToken\"")
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
+}
+
+kotlin {
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+    androidTarget {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(project(":domain"))
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.ktor.client.android)
+            }
+        }
+        iosMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.kotlin.test)
+            }
+        }
+    }
 }
 
-dependencies {
-    implementation(project(":domain"))
-    implementation(libs.androidx.core.ktx)
-    // Network
-    implementation(libs.kotlinx.serialization.json)
-    // Dependency Injection
-    // Testing
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
+buildkonfig {
+    packageName = "com.buiguesortola.cryptotracker.network"
+    val apiToken = localProperties.getProperty("API_TOKEN") ?: ""
+
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_TOKEN", apiToken)
+    }
 }
