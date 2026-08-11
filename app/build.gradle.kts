@@ -13,7 +13,7 @@ android {
         namespace = "com.buiguesortola.cryptotracker"
         applicationId = "com.buiguesortola.cryptotracker"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
