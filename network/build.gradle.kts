@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -44,12 +43,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(libs.androidx.core.ktx)
     // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
     // Dependency Injection
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
     // Testing
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)

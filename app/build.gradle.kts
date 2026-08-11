@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -49,10 +48,6 @@ android {
     buildFeatures {
         compose = true
     }
-
-    hilt {
-        enableAggregatingTask = false
-    }
 }
 
 dependencies {
@@ -71,16 +66,11 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     // Dependency Injection
-    implementation(libs.hilt.nav.compose)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
 
     // Lifecycle Components
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // Networking
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
 
     // Coroutines
