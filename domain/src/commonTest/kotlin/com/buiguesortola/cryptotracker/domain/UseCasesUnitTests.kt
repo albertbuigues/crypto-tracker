@@ -4,25 +4,26 @@ import com.buiguesortola.cryptotracker.domain.models.Coin
 import com.buiguesortola.cryptotracker.domain.repository.CryptosRepository
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenBestCoinsUseCase
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenWorstCoinsUseCase
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.*
+
+class FakeCryptosRepository : CryptosRepository {
+    var result: Result<List<Coin>> = Result.success(emptyList())
+    override suspend fun getCoins(): Result<List<Coin>> = result
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UseCasesUnitTests {
 
-    private val repository: CryptosRepository = mockk()
+    private val repository = FakeCryptosRepository()
     lateinit var totalCoins: List<Coin>
 
-    @Before
+    @BeforeTest
     fun setup() {
         totalCoins = createFakeCoins()
-        coEvery { repository.getCoins() } returns Result.success(totalCoins)
+        repository.result = Result.success(totalCoins)
     }
 
     @Test
