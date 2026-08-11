@@ -14,7 +14,7 @@ val localProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.buiguesortola.cryptotracker"
+    namespace = "com.buiguesortola.cryptotracker.network"
     compileSdk = 35
 
     buildFeatures {
