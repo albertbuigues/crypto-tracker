@@ -1,8 +1,8 @@
 [versions]
 # Build tools
-agp = "8.13.2"
+agp = "9.3.1"
 kotlin = "2.4.10"
-ksp = "2.3.10"
+ksp = "2.3.11"
 buildkonfig = "0.22.0"
 
 # AndroidX
@@ -49,6 +49,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 google-material = { module = "com.google.android.material:material", version.ref = "material-version" }
 
 # Lifecycle
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 # Koin

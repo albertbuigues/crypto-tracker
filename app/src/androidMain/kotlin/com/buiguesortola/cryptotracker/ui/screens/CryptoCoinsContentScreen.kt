@@ -36,7 +36,7 @@ import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 fun StatefulCryptoCoinsList(
     selectedChip: Byte,
     onChipSelected: (Byte) -> Unit,
-    coinsList: List<CoinUiState>
+    coinsList: List<CoinUiState>,
 ) {
     StatelessCryptoCoinsList(selectedChip, onChipSelected, coinsList)
 }
@@ -45,16 +45,17 @@ fun StatefulCryptoCoinsList(
 private fun StatelessCryptoCoinsList(
     selectedChip: Byte = 0,
     onChipSelected: (Byte) -> Unit = {},
-    coinsList: List<CoinUiState> = emptyList()
+    coinsList: List<CoinUiState> = emptyList(),
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Transparent)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Color.Transparent),
     ) {
         Spacer(Modifier.height(20.dp))
         Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
         ) {
             StatefulFilterChip(
                 selected = selectedChip == TOP_TEN_FILTER,
@@ -62,7 +63,7 @@ private fun StatelessCryptoCoinsList(
                 id = TOP_TEN_FILTER,
                 text = stringResource(R.string.best_coins),
                 leadingIconResId = R.drawable.arrow_up,
-                testTag = FILTER_TOP_TAG
+                testTag = FILTER_TOP_TAG,
             )
             Spacer(Modifier.width(8.dp))
             StatefulFilterChip(
@@ -71,21 +72,22 @@ private fun StatelessCryptoCoinsList(
                 id = WORST_TEN_FILTER,
                 text = stringResource(R.string.worst_coins),
                 leadingIconResId = R.drawable.arrow_down,
-                testTag = FILTER_WORST_TAG
+                testTag = FILTER_WORST_TAG,
             )
         }
         Spacer(Modifier.height(20.dp))
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
         ) {
             items(coinsList) { coin ->
                 StatefulCryptoCoinsListElement(
                     coinName = coin.name,
                     symbol = coin.symbol,
                     priceInEuro = coin.priceInEuro.toString(),
-                    changePercentage = coin.changePercentage
+                    changePercentage = coin.changePercentage,
                 )
                 Spacer(Modifier.height(8.dp))
             }
@@ -99,21 +101,22 @@ private fun PreviewCoinsList() {
     CryptoTrackerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = BackgroundPrimaryColor
+            color = BackgroundPrimaryColor,
         ) {
             StatelessCryptoCoinsList(
-                coinsList = listOf(
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25")
-                )
+                coinsList =
+                    listOf(
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                    ),
             )
         }
     }

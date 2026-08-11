@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         namespace = "com.buiguesortola.cryptotracker"
@@ -25,7 +25,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -35,58 +35,79 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-
-            freeCompilerArgs.addAll(
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
-            )
-        }
-    }
-
     buildFeatures {
         compose = true
     }
 }
 
-dependencies {
-    implementation(project(":network"))
-    implementation(project(":domain"))
-    // AndroidX Core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.google.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Compose
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
+kotlin {
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
 
-    // Dependency Injection
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            baseName = "SharedApp"
+            isStatic = true
+        }
+    }
 
-    // Lifecycle Components
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":domain"))
+            implementation(project(":network"))
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.coroutines.core)
+        }
 
-    // Networking
-    implementation(libs.kotlinx.serialization.json)
+        androidMain.dependencies {
+            // AndroidX Core
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.google.material)
+            implementation(libs.androidx.lifecycle.runtime.ktx)
+            // Compose
+            implementation(libs.androidx.activity.compose)
+            implementation(
+                project.dependencies.platform(
+                    libs.androidx.compose.bom
+                        .get()
+                        .toString(),
+                ),
+            )
+            implementation(libs.androidx.compose.ui)
+            implementation(libs.androidx.compose.ui.graphics)
+            implementation(libs.androidx.compose.ui.tooling.preview)
+            implementation(libs.androidx.compose.material3)
 
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-    testImplementation(libs.kotlinx.coroutines.test)
+            // Dependency Injection
+            implementation(
+                project.dependencies.platform(
+                    libs.koin.bom
+                        .get()
+                        .toString(),
+                ),
+            )
+            implementation(libs.koin.android)
+            implementation(libs.koin.compose)
 
-    // Testing
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.turbine)
+            // Lifecycle Components
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.mockk.android)
+            // Coroutines
+            implementation(libs.kotlinx.coroutines.android)
+        }
 
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+        }
+    }
 }

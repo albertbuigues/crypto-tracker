@@ -17,17 +17,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.buiguesortola.cryptotracker.R
 import com.buiguesortola.cryptotracker.domain.UiEvent
 import com.buiguesortola.cryptotracker.ui.states.UiState
-import com.buiguesortola.cryptotracker.ui.theme.PrimaryColor
 import com.buiguesortola.cryptotracker.ui.viewmodels.CryptoCoinsListViewModel
+import com.buiguesortola.cryptotracker.ui.theme.PrimaryColor
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CryptoCoinsScreen(
-    viewModel: CryptoCoinsListViewModel = hiltViewModel()
+    viewModel: CryptoCoinsListViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()

@@ -13,9 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.buiguesortola.cryptotracker.ui.screens.CryptoCoinsScreen
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

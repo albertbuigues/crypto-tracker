@@ -10,20 +10,19 @@ import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenWorstCoinsUseCas
 import com.buiguesortola.cryptotracker.ui.states.CryptoCoinsListUIState
 import com.buiguesortola.cryptotracker.ui.states.UiState
 import com.buiguesortola.cryptotracker.ui.states.toUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.TimeSource
 
-@HiltViewModel
-class CryptoCoinsListViewModel @Inject constructor(
+class CryptoCoinsListViewModel(
     private val getTopTenBestCoinsUseCase: GetTopTenBestCoinsUseCase,
     private val getWorstTenCoinsUseCase: GetTopTenWorstCoinsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<CryptoCoinsListUIState>>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
@@ -38,20 +37,17 @@ class CryptoCoinsListViewModel @Inject constructor(
     private fun fetchCryptoCoins(filter: Byte = TOP_TEN_FILTER) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
-            val startTime = System.currentTimeMillis()
+            val mark = TimeSource.Monotonic.markNow()
 
             val result = if (filter == TOP_TEN_FILTER) getTopTenBestCoinsUseCase()
             else getWorstTenCoinsUseCase()
 
-            val endTime = System.currentTimeMillis()
-            val duration = endTime - startTime
+            val elapsed = mark.elapsedNow()
 
-            if (duration < 500) {
-                // I've made this because when performance is excellent, the loader seems to
-                // be a flickering effect, but it's not, only the backend and compose are
-                // perfect performative
-                delay(500 - duration)
+            if (elapsed < 500.milliseconds) {
+                delay(500.milliseconds - elapsed)
             }
+            
             result.fold(
                 onSuccess = { coins ->
                     val coinsToUiState = coins.map { it.toUiState() }
@@ -78,7 +74,6 @@ class CryptoCoinsListViewModel @Inject constructor(
     fun refreshData() {
         val currentState = uiState.value
         if (currentState !is UiState.Success) {
-            // We are in empty screen
             fetchCryptoCoins()
             return
         }
