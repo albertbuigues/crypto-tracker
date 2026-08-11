@@ -1,23 +1,22 @@
 package com.buiguesortola.cryptotracker.repository
 
-import com.buiguesortola.cryptotracker.api.CryptoApi
+import com.buiguesortola.cryptotracker.api.KtorCryptoApi
 import com.buiguesortola.cryptotracker.domain.CryptoError
 import com.buiguesortola.cryptotracker.domain.models.Coin
 import com.buiguesortola.cryptotracker.domain.repository.CryptosRepository
 import com.buiguesortola.cryptotracker.dto.toCoin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
 const val EURO_SYMBOL = "EUR"
 
-class CryptoRepositoryImpl @Inject constructor(
-    private val api: CryptoApi,
+class CryptoRepositoryImpl (
+    private val api: KtorCryptoApi,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): CryptosRepository {
 
@@ -58,7 +57,7 @@ class CryptoRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             val mappedError = when (e) {
-                is IOException -> {
+                is kotlinx.io.IOException -> {
                     CryptoError.NetworkError("Check your internet connection: ${e.message}")
                 }
                 else -> {

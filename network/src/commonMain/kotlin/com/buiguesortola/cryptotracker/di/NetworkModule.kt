@@ -1,62 +1,29 @@
 package com.buiguesortola.cryptotracker.di
 
-import com.buiguesortola.cryptotracker.api.CryptoApi
-import com.buiguesortola.cryptotracker.network.BuildConfig
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.ExperimentalSerializationApi
+import com.buiguesortola.cryptotracker.api.KtorCryptoApi
+import com.buiguesortola.cryptotracker.domain.repository.CryptosRepository
+import com.buiguesortola.cryptotracker.repository.CryptoRepositoryImpl
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
-import retrofit2.create
-import javax.inject.Singleton
+import org.koin.dsl.module
+import com.buiguesortola.cryptotracker.network.BuildKonfig
 
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
-
-    @OptIn(ExperimentalSerializationApi::class)
-    @Provides
-    @Singleton
-    fun provideJson(): Json {
-        return Json {
-            ignoreUnknownKeys = true
-            explicitNulls = false
+val networkModule = module {
+    single {
+        HttpClient {
+            defaultRequest {
+                url("https://rest.coincap.io/v3/")
+                header("Authorization", "Bearer ${BuildKonfig.API_TOKEN}")
+            }
+            install(ContentNegotiation) {
+                json(Json { ignoreUnknownKeys = true} )
+            }
         }
     }
-
-    @Provides
-    @Singleton
-    fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${BuildConfig.API_TOKEN}")
-                    .build()
-                chain.proceed(request)
-            }
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(json: Json, client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://rest.coincap.io/v3/")
-            .client(client)
-            .addConverterFactory(
-                json.asConverterFactory(MediaType.get("application/json"))
-            )
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideCryptoCoroutinesApi(retrofit: Retrofit): CryptoApi {
-        return retrofit.create()
-    }
+    single { KtorCryptoApi(get()) }
+    single<CryptosRepository> { CryptoRepositoryImpl(get()) }
 }
