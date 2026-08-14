@@ -1,0 +1,9 @@
+/* English localizations (copied from Android strings.xml) */
+"app_name" = "CryptoCoinsList";
+"best_coins" = "Best coins";
+"worst_coins" = "Worst coins";
+"empty_text" = "Some error happened. Please refresh to load data.";
+"refresh" = "Refresh";
+"network_error" = "Check your internet connection and try again";
+"euro_not_found" = "Could not find the euro rate. Please try again later";
+"generic_error" = "Something went wrong. Please try again later";

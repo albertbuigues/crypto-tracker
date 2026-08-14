@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.skie)
 }
 
 android {
@@ -47,6 +50,16 @@ kotlin {
         }
     }
 
+    val xcf = XCFramework("SharedApp")
+
+    composeCompiler {
+        targetKotlinPlatforms.set(
+            setOf(
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.androidJvm,
+            ),
+        )
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -55,6 +68,7 @@ kotlin {
         it.binaries.framework {
             baseName = "SharedApp"
             isStatic = true
+            xcf.add(this)
         }
     }
 
@@ -84,6 +98,7 @@ kotlin {
             )
             implementation(libs.androidx.compose.ui)
             implementation(libs.androidx.compose.ui.graphics)
+            implementation(libs.androidx.compose.ui.tooling)
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.compose.material3)
 

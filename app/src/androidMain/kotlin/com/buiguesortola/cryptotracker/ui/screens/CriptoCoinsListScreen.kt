@@ -21,49 +21,53 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.buiguesortola.cryptotracker.R
 import com.buiguesortola.cryptotracker.domain.UiEvent
 import com.buiguesortola.cryptotracker.ui.states.UiState
-import com.buiguesortola.cryptotracker.ui.viewmodels.CryptoCoinsListViewModel
 import com.buiguesortola.cryptotracker.ui.theme.PrimaryColor
+import com.buiguesortola.cryptotracker.ui.viewmodels.CryptoCoinsListViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
-fun CryptoCoinsScreen(
-    viewModel: CryptoCoinsListViewModel = koinViewModel()
-) {
+fun CryptoCoinsScreen(viewModel: CryptoCoinsListViewModel = koinViewModel()) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.uiEvents.collect { event ->
-            val resId = when (event) {
-                is UiEvent.ShowNetworkError -> R.string.network_error
-                is UiEvent.ShowEuroNotFoundError -> R.string.euro_not_found
-                is UiEvent.ShowGenericError -> R.string.generic_error
-            }
+            val resId =
+                when (event) {
+                    is UiEvent.ShowNetworkError -> R.string.network_error
+                    is UiEvent.ShowEuroNotFoundError -> R.string.euro_not_found
+                    is UiEvent.ShowGenericError -> R.string.generic_error
+                }
             val text = context.getString(resId)
             Toast.makeText(context, text, Toast.LENGTH_LONG).show()
         }
     }
 
-    when(val currentState = state) {
-        is UiState.Loading -> LoadingScreen()
+    when (val currentState = state) {
+        is UiState.Loading -> {
+            LoadingScreen()
+        }
+
         is UiState.Success -> {
             val pullToRefreshState = rememberPullToRefreshState()
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(pullToRefreshState.nestedScrollConnection)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .nestedScroll(pullToRefreshState.nestedScrollConnection),
             ) {
                 StatefulCryptoCoinsList(
                     selectedChip = currentState.content.selectedChip,
                     onChipSelected = { filter -> viewModel.manageFilterState(filter) },
-                    coinsList = currentState.content.coinsList
+                    coinsList = currentState.content.coinsList,
                 )
 
                 PullToRefreshContainer(
                     state = pullToRefreshState,
                     modifier = Modifier.align(Alignment.TopCenter),
                     containerColor = Color.White,
-                    contentColor = PrimaryColor
+                    contentColor = PrimaryColor,
                 )
 
                 LaunchedEffect(pullToRefreshState.isRefreshing) {
@@ -74,12 +78,13 @@ fun CryptoCoinsScreen(
                 }
             }
         }
+
         is UiState.Error -> {
             // Logic to propagate error to analytics tool like Firebase or others
             // UI management is done in Launched Effect using Channels for one time events
             StatefulEmptyScreen(
                 helperText = stringResource(R.string.empty_text),
-                onRefresh = { viewModel.refreshData() }
+                onRefresh = { viewModel.refreshData() },
             )
         }
     }
