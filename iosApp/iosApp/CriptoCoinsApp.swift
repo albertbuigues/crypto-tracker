@@ -10,6 +10,11 @@ import SharedApp
 
 @main
 struct CriptoCoinsApp: App {
+    
+    init() {
+        KoinHelperKt.doInitKoin()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

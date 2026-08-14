@@ -1,0 +1,84 @@
+//
+//  CryptoCoinsListView.swift
+//  iosApp
+//
+//  Created by GitHub Copilot on 14/08/2026.
+//
+
+import SwiftUI
+import SharedApp
+
+// MARK: - Stateful Component (Container)
+/// Stateful wrapper that manages ViewModel injection via Koin factory.
+/// This component handles all business logic and state management.
+struct CryptoCoinsListViewStateful: View {
+    @StateObject private var adapter: CryptoCoinsListViewModelAdapter
+    
+    init() {
+        let viewModel = KoinHelper().getCryptoCoinsListViewModel()
+        _adapter = StateObject(wrappedValue: CryptoCoinsListViewModelAdapter(viewModel: viewModel))
+    }
+    
+    var body: some View {
+        CryptoCoinsListViewStateless(
+            selectedFilter: adapter.selectedFilter,
+            onFilterSelected: adapter.selectFilter(_:)
+        )
+    }
+}
+
+// MARK: - Stateless Component (Presentation)
+/// Stateless presentation component that only receives data and callbacks.
+/// This component has no dependencies on the ViewModel and is easy to test/preview.
+struct CryptoCoinsListViewStateless: View {
+    let selectedFilter: Int8
+    let onFilterSelected: (Int8) -> Void
+
+    var body: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 16) {
+                HStack(spacing: 12) {
+                    FilterChipView(
+                        id: "chip_best",
+                        text: LocalizedStringKey("best_coins"),
+                        isSelected: selectedFilter == 0,
+                        iconName: "arrow.up"
+                    ) {
+                        if selectedFilter == 0 { return }
+                        onFilterSelected(0)
+                    }
+                    
+                    FilterChipView(
+                        id: "chip_worst",
+                        text: LocalizedStringKey("worst_coins"),
+                        isSelected: selectedFilter == 1,
+                        iconName: "arrow.down"
+                    ) {
+                        if (selectedFilter == 1) { return }
+                        onFilterSelected(1)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
+            }
+            .padding(.vertical, 16)
+            .background(AppColors.backgroundPrimary)
+            
+            Spacer()
+        }
+        .background(AppColors.backgroundPrimary)
+    }
+}
+
+// MARK: - Preview (Stateless)
+#if DEBUG
+struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
+    static var previews: some View {
+        CryptoCoinsListViewStateless(
+            selectedFilter: 0,
+            onFilterSelected: { _ in }
+        )
+        .previewDisplayName("Crypto List - Stateless Preview")
+    }
+}
+#endif

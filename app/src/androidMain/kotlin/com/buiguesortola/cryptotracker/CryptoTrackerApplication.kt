@@ -1,6 +1,7 @@
 package com.buiguesortola.cryptotracker
 
 import android.app.Application
+import com.buiguesortola.cryptotracker.di.androidAppModule
 import com.buiguesortola.cryptotracker.di.appModule
 import com.buiguesortola.cryptotracker.di.networkModule
 import com.buiguesortola.cryptotracker.domain.di.domainModule
@@ -12,7 +13,7 @@ class CryptoTrackerApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@CryptoTrackerApplication)
-            modules(domainModule, networkModule, appModule)
+            modules(domainModule, networkModule, androidAppModule, appModule)
         }
     }
 }
