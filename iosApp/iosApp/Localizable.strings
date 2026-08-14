@@ -4,6 +4,7 @@
 "worst_coins" = "Worst coins";
 "empty_text" = "Some error happened. Please refresh to load data.";
 "refresh" = "Refresh";
+"loading" = "Loading...";
 "network_error" = "Check your internet connection and try again";
 "euro_not_found" = "Could not find the euro rate. Please try again later";
 "generic_error" = "Something went wrong. Please try again later";
