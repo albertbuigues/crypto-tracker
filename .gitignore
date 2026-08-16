@@ -202,6 +202,20 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+### Kotlin Multiplatform
+.kotlin/
+/build/
+**/build/
+
+### Xcode
+iosApp/DerivedData/
+iosApp/Pods/
+iosApp/.xcworkspace/
+iosApp/iosApp.xcodeproj/project.xcworkspace/
+iosApp/iosApp.xcodeproj/xcuserdata/
+iosApp/iosApp.xcodeproj/project.xcworkspace/xcuserdata/
+**/UserInterfaceState.xcuserstate
+
 ### Kotlin template
 # Compiled class file
 *.class
