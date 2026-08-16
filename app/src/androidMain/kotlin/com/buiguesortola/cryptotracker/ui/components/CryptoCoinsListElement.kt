@@ -28,10 +28,13 @@ fun StatefulCryptoCoinsListElement(
     coinName: String,
     symbol: String,
     priceInEuro: String,
-    changePercentage: String
+    changePercentage: String,
 ) {
     StatelessCryptoCoinsListElement(
-        coinName, priceInEuro, symbol, changePercentage
+        coinName,
+        priceInEuro,
+        symbol,
+        changePercentage,
     )
 }
 
@@ -40,55 +43,57 @@ private fun StatelessCryptoCoinsListElement(
     coinName: String = "Bitcoin",
     priceInEuro: String = "52000.20",
     symbol: String = "BTC",
-    changePercentage: String = "0.25"
+    changePercentage: String = "0.25",
 ) {
-    val percentageColor = if (changePercentage.toDouble() > 0) {
-        PositiveGreen
-    } else {
-        NegativeRed
-    }
+    val percentageColor =
+        if (changePercentage.removeSuffix("%").toDouble() > 0) {
+            PositiveGreen
+        } else {
+            NegativeRed
+        }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .clip(RoundedCornerShape(2.dp))
-            .background(Color.White)
-            .padding(12.dp)
-            .testTag(COINS_LIST_ELEM_TAG)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .clip(RoundedCornerShape(2.dp))
+                .background(Color.White)
+                .padding(12.dp)
+                .testTag(COINS_LIST_ELEM_TAG),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = coinName,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
                 text = priceInEuro,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = symbol,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                text = "$changePercentage%",
+                text = changePercentage,
                 style = MaterialTheme.typography.bodyMedium,
-                color = percentageColor
+                color = percentageColor,
             )
         }
     }
