@@ -6,6 +6,7 @@ This project is a modern Android application that tracks cryptocurrency market p
 
 To run this project, you need to provide a valid API Token in your local environment to authorize network requests.
 
+0. Get a token here: https://pro.coincap.io/dashboard
 1. Open your `local.properties` file in the root directory.
 2. Add the following line:
    `API_TOKEN=your_api_token`
