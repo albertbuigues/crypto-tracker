@@ -69,6 +69,7 @@ final class CryptoCoinsListViewModelAdapter: ObservableObject {
     }
 
     func selectFilter(_ id: Int8) {
+        self.selectedFilter = id
         viewModel.manageFilterState(newSelectedFilter: id)
     }
 }

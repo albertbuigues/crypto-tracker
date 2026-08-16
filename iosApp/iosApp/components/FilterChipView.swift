@@ -10,7 +10,7 @@ struct FilterChipView: View {
     let id: String
     let text: LocalizedStringKey
     let isSelected: Bool
-    let iconName: String  // "arrow.up" for best coins, "arrow.down" for worst coins
+    let iconName: String
     let action: () -> Void
 
     var body: some View {
