@@ -11,6 +11,9 @@ To run this project, you need to provide a valid API Token in your local environ
    `API_TOKEN=your_api_token`
 3. Sync Gradle and run the app. The project is configured to inject this value into the `BuildConfig` during the compilation process.
 
+> [!NOTE]
+> **API Limitation:** This project uses the CoinCap v3 API, which has a free tier limit of **500 credits per month**. The quota resets on the 1st of every month. If you encounter an "Unauthorized" or "Required field missing" error, it is likely that the monthly limit has been reached.
+
 ## 1. Architectural Pattern: Clean Architecture
 The project is built following **Clean Architecture** principles. The main goal is the **Separation of Concerns**, ensuring that the business logic is isolated from external factors like UI frameworks, databases, or network providers.
 
