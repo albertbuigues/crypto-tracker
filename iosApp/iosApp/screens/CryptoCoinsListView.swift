@@ -22,6 +22,7 @@ struct CryptoCoinsListViewStateful: View {
     var body: some View {
         CryptoCoinsListViewStateless(
             selectedFilter: adapter.selectedFilter,
+            coins: adapter.coins,
             onFilterSelected: adapter.selectFilter(_:)
         )
     }
@@ -32,6 +33,7 @@ struct CryptoCoinsListViewStateful: View {
 /// This component has no dependencies on the ViewModel and is easy to test/preview.
 struct CryptoCoinsListViewStateless: View {
     let selectedFilter: Int8
+    let coins: [CoinUiModel]
     let onFilterSelected: (Int8) -> Void
 
     var body: some View {
@@ -64,8 +66,23 @@ struct CryptoCoinsListViewStateless: View {
             .padding(.vertical, 16)
             .background(AppColors.backgroundPrimary)
             
-            Spacer()
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVStack(spacing: 8) {
+                    ForEach(coins, id: \.id) { coin in
+                        CryptoCoinElementView(
+                            coinName: coin.name,
+                            priceInEuro: coin.priceInEuro,
+                            symbol: coin.symbol,
+                            changePercentage: String(coin.changePercentage)
+                        )
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 20)
+            }
+            .scrollClipDisabled()
         }
+        .safeAreaPadding(.bottom, 20.0)
         .background(AppColors.backgroundPrimary)
     }
 }
@@ -76,6 +93,88 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
     static var previews: some View {
         CryptoCoinsListViewStateless(
             selectedFilter: 0,
+            coins: [
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+                CoinUiModel.init(from:
+                    CoinUiState(
+                        name: "Bitcoin",
+                        symbol: "BTC",
+                        priceInEuro: 52000.00,
+                        changePercentage: "0.25"
+                    )
+                ),
+            ],
             onFilterSelected: { _ in }
         )
         .previewDisplayName("Crypto List - Stateless Preview")

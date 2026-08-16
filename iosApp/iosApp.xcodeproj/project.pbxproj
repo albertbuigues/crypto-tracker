@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ADA1A81D3031BACE00A1995C /* CryptoCoinElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A81C3031BACE00A1995C /* CryptoCoinElementView.swift */; };
 		ADB4814E302F266400ED3D84 /* CryptoCoinsListViewModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4814D302F265900ED3D84 /* CryptoCoinsListViewModelAdapter.swift */; };
 		ADB48151302F2B8E00ED3D84 /* FilterChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4814F302F2B8E00ED3D84 /* FilterChipView.swift */; };
 		ADB48155302F312800ED3D84 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ADB48152302F312800ED3D84 /* Localizable.strings */; };
@@ -34,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ADA1A81C3031BACE00A1995C /* CryptoCoinElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinElementView.swift; sourceTree = "<group>"; };
 		ADB4814D302F265900ED3D84 /* CryptoCoinsListViewModelAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinsListViewModelAdapter.swift; sourceTree = "<group>"; };
 		ADB4814F302F2B8E00ED3D84 /* FilterChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChipView.swift; sourceTree = "<group>"; };
 		ADB48152302F312800ED3D84 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				ADB4814F302F2B8E00ED3D84 /* FilterChipView.swift */,
+				ADA1A81C3031BACE00A1995C /* CryptoCoinElementView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				ADB48151302F2B8E00ED3D84 /* FilterChipView.swift in Sources */,
 				ADB4814E302F266400ED3D84 /* CryptoCoinsListViewModelAdapter.swift in Sources */,
 				ADB48159302F334C00ED3D84 /* CryptoCoinsListView.swift in Sources */,
+				ADA1A81D3031BACE00A1995C /* CryptoCoinElementView.swift in Sources */,
 				ADE68914302F19620025E01F /* ContentView.swift in Sources */,
 				ADE68915302F19620025E01F /* CriptoCoinsApp.swift in Sources */,
 				ADB48156302F312800ED3D84 /* AppTheme.swift in Sources */,
