@@ -21,9 +21,11 @@ struct CryptoCoinsListViewStateful: View {
     
     var body: some View {
         CryptoCoinsListViewStateless(
+            isLoading: adapter.isLoading,
             selectedFilter: adapter.selectedFilter,
             coins: adapter.coins,
-            onFilterSelected: adapter.selectFilter(_:)
+            onFilterSelected: adapter.selectFilter(_:),
+            onRefresh: adapter.refresh
         )
     }
 }
@@ -32,58 +34,77 @@ struct CryptoCoinsListViewStateful: View {
 /// Stateless presentation component that only receives data and callbacks.
 /// This component has no dependencies on the ViewModel and is easy to test/preview.
 struct CryptoCoinsListViewStateless: View {
+    let isLoading: Bool
     let selectedFilter: Int8
     let coins: [CoinUiModel]
     let onFilterSelected: (Int8) -> Void
+    let onRefresh: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            VStack(spacing: 16) {
-                HStack(spacing: 12) {
-                    FilterChipView(
-                        id: "chip_best",
-                        text: LocalizedStringKey("best_coins"),
-                        isSelected: selectedFilter == 0,
-                        iconName: "arrow.up"
-                    ) {
-                        if selectedFilter == 0 { return }
-                        onFilterSelected(0)
-                    }
-                    
-                    FilterChipView(
-                        id: "chip_worst",
-                        text: LocalizedStringKey("worst_coins"),
-                        isSelected: selectedFilter == 1,
-                        iconName: "arrow.down"
-                    ) {
-                        if (selectedFilter == 1) { return }
-                        onFilterSelected(1)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 16)
-            }
-            .padding(.vertical, 16)
-            .background(AppColors.backgroundPrimary)
+        ZStack {
+            AppColors.backgroundPrimary
+                .ignoresSafeArea()
             
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 8) {
-                    ForEach(coins, id: \.id) { coin in
-                        CryptoCoinElementView(
-                            coinName: coin.name,
-                            priceInEuro: coin.priceInEuro,
-                            symbol: coin.symbol,
-                            changePercentage: String(coin.changePercentage)
-                        )
+            VStack(spacing: 0) {
+                if isLoading {
+                    LoadingView()
+                } else if coins.isEmpty {
+                    EmptyView(
+                        emptyScreenText: LocalizedStringKey("empty_text"),
+                        onRefresh: onRefresh
+                    )
+                } else {
+                    VStack(spacing: 0) {
+                        VStack(spacing: 16) {
+                            HStack(spacing: 12) {
+                                FilterChipView(
+                                    id: "chip_best",
+                                    text: LocalizedStringKey("best_coins"),
+                                    isSelected: selectedFilter == 0,
+                                    iconName: "arrow.up"
+                                ) {
+                                    if selectedFilter == 0 { return }
+                                    onFilterSelected(0)
+                                }
+
+                                FilterChipView(
+                                    id: "chip_worst",
+                                    text: LocalizedStringKey("worst_coins"),
+                                    isSelected: selectedFilter == 1,
+                                    iconName: "arrow.down"
+                                ) {
+                                    if (selectedFilter == 1) { return }
+                                    onFilterSelected(1)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 16)
+                        }
+                        .padding(.vertical, 16)
+                        .background(AppColors.backgroundPrimary)
+
+                        ScrollView(.vertical, showsIndicators: false) {
+                            LazyVStack(spacing: 8) {
+                                ForEach(coins, id: \.id) { coin in
+                                    CryptoCoinElementView(
+                                        coinName: coin.name,
+                                        priceInEuro: coin.priceInEuro,
+                                        symbol: coin.symbol,
+                                        changePercentage: coin.changePercentage
+                                    )
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                        .scrollClipDisabled()
+                        .refreshable {
+                            onRefresh()
+                        }
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 20)
             }
-            .scrollClipDisabled()
+            .safeAreaPadding(.bottom, 20.0)
         }
-        .safeAreaPadding(.bottom, 20.0)
-        .background(AppColors.backgroundPrimary)
     }
 }
 
@@ -92,6 +113,7 @@ struct CryptoCoinsListViewStateless: View {
 struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
     static var previews: some View {
         CryptoCoinsListViewStateless(
+            isLoading: false,
             selectedFilter: 0,
             coins: [
                 CoinUiModel.init(from:
@@ -99,7 +121,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -107,7 +130,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -115,7 +139,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -123,7 +148,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -131,7 +157,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -139,7 +166,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -147,7 +175,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -155,7 +184,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -163,7 +193,8 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
                 CoinUiModel.init(from:
@@ -171,11 +202,13 @@ struct CryptoCoinsListViewStateless_Previews: PreviewProvider {
                         name: "Bitcoin",
                         symbol: "BTC",
                         priceInEuro: 52000.00,
-                        changePercentage: "0.25"
+                        changePercentage: 0.25,
+                        changePercentFormatted: "0.25%"
                     )
                 ),
             ],
-            onFilterSelected: { _ in }
+            onFilterSelected: { _ in },
+            onRefresh: {}
         )
         .previewDisplayName("Crypto List - Stateless Preview")
     }

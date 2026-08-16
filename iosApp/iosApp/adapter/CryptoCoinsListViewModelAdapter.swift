@@ -34,32 +34,23 @@ final class CryptoCoinsListViewModelAdapter: ObservableObject {
         uiStateTask = Task { [weak self] in
             guard let self = self else { return }
             for await state in self.viewModel.uiState {
-                let typeName = String(describing: type(of: state))
-                if typeName.contains("Loading") {
+                switch onEnum(of: state) {
+                    
+                case .loading:
                     self.isLoading = true
                     self.coins = []
-                } else if typeName.contains("Success") {
+                    
+                case .success(let successState):
                     self.isLoading = false
-                    // Try to read `content` property dynamically (works across SKIE mappings).
-                    let mirror = Mirror(reflecting: state)
-                    if let contentChild = mirror.children.first(where: { $0.label == "content" }),
-                       let content = contentChild.value as? CryptoCoinsListUIState {
+                    if let content = successState.content {
                         self.selectedFilter = content.selectedChip
                         self.coins = content.coinsList.map { CoinUiModel(from: $0) }
-                    } else {
-                        self.coins = []
                     }
-                } else if typeName.contains("Error") {
+                    
+                case .error:
                     self.isLoading = false
                     self.coins = []
                 }
-            }
-        }
-        
-        uiEventsTask = Task { [weak self] in
-            guard let self = self else { return }
-            for await event in self.viewModel.uiEvents {
-                self.alertMessage = String(describing: event)
             }
         }
     }
@@ -85,6 +76,6 @@ struct CoinUiModel: Identifiable {
         self.name = shared.name
         self.symbol = shared.symbol
         self.priceInEuro = "\(shared.priceInEuro) €"
-        self.changePercentage = Double("\(shared.changePercentage)") ?? 0.0
+        self.changePercentage = shared.changePercentage
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD9430D03031D7B00078177D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9430CF3031D7B00078177D /* LoadingView.swift */; };
+		AD9430D13031D7B00078177D /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9430CE3031D7B00078177D /* EmptyView.swift */; };
 		ADA1A81D3031BACE00A1995C /* CryptoCoinElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A81C3031BACE00A1995C /* CryptoCoinElementView.swift */; };
 		ADB4814E302F266400ED3D84 /* CryptoCoinsListViewModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4814D302F265900ED3D84 /* CryptoCoinsListViewModelAdapter.swift */; };
 		ADB48151302F2B8E00ED3D84 /* FilterChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4814F302F2B8E00ED3D84 /* FilterChipView.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD9430CE3031D7B00078177D /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		AD9430CF3031D7B00078177D /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		ADA1A81C3031BACE00A1995C /* CryptoCoinElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinElementView.swift; sourceTree = "<group>"; };
 		ADB4814D302F265900ED3D84 /* CryptoCoinsListViewModelAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinsListViewModelAdapter.swift; sourceTree = "<group>"; };
 		ADB4814F302F2B8E00ED3D84 /* FilterChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChipView.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		ADB48158302F334C00ED3D84 /* screens */ = {
 			isa = PBXGroup;
 			children = (
+				AD9430CE3031D7B00078177D /* EmptyView.swift */,
+				AD9430CF3031D7B00078177D /* LoadingView.swift */,
 				ADB48157302F334C00ED3D84 /* CryptoCoinsListView.swift */,
 			);
 			path = screens;
@@ -231,6 +237,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADB48151302F2B8E00ED3D84 /* FilterChipView.swift in Sources */,
+				AD9430D03031D7B00078177D /* LoadingView.swift in Sources */,
+				AD9430D13031D7B00078177D /* EmptyView.swift in Sources */,
 				ADB4814E302F266400ED3D84 /* CryptoCoinsListViewModelAdapter.swift in Sources */,
 				ADB48159302F334C00ED3D84 /* CryptoCoinsListView.swift in Sources */,
 				ADA1A81D3031BACE00A1995C /* CryptoCoinElementView.swift in Sources */,

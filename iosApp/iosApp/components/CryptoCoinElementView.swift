@@ -11,10 +11,10 @@ struct CryptoCoinElementView: View {
     let coinName: String
     let priceInEuro: String
     let symbol: String
-    let changePercentage: String
+    let changePercentage: Double
     
     private var isPositive: Bool {
-        (Double(changePercentage) ?? 0.0) > 0
+        changePercentage > 0
     }
     private var priceColor: Color {
         isPositive ? AppColors.positiveGreen : AppColors.negativeRed
@@ -24,17 +24,21 @@ struct CryptoCoinElementView: View {
         VStack {
             HStack {
                 Text(coinName)
+                    .font(AppTypography.bodySmall)
                     .foregroundColor(AppColors.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(priceInEuro)
+                    .font(AppTypography.bodySmall)
                     .foregroundColor(AppColors.primary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             HStack {
                 Text(symbol)
+                    .font(AppTypography.bodySmall)
                     .foregroundColor(AppColors.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(changePercentage)%")
+                    .font(AppTypography.bodySmall)
                     .foregroundColor(priceColor)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
@@ -52,14 +56,14 @@ struct CryptoCoinElementView: View {
             coinName: "Bitcoin",
             priceInEuro: "52000.00",
             symbol: "BTC",
-            changePercentage: "0.25"
+            changePercentage: 0.25
         )
         
         CryptoCoinElementView(
             coinName: "Bitcoin",
             priceInEuro: "52000.00",
             symbol: "BTC",
-            changePercentage: "-0.25"
+            changePercentage: -0.25
         )
     }
     .padding()

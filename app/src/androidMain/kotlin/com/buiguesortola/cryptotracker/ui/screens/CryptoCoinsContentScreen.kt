@@ -88,6 +88,7 @@ private fun StatelessCryptoCoinsList(
                     symbol = coin.symbol,
                     priceInEuro = coin.priceInEuro.toString(),
                     changePercentage = coin.changePercentage,
+                    changePercentageFormatted = coin.changePercentFormatted,
                 )
                 Spacer(Modifier.height(8.dp))
             }
@@ -106,16 +107,16 @@ private fun PreviewCoinsList() {
             StatelessCryptoCoinsList(
                 coinsList =
                     listOf(
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                        CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
+                        CoinUiState("Bitcoin", "BTC", 52000.20, changePercentage = 0.25, "0.25"),
                     ),
             )
         }

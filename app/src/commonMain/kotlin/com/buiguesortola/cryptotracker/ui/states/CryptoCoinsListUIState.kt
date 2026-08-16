@@ -5,19 +5,22 @@ import com.buiguesortola.cryptotracker.domain.models.Coin
 
 data class CryptoCoinsListUIState(
     val selectedChip: Byte = TOP_TEN_FILTER,
-    val coinsList: List<CoinUiState> = emptyList()
+    val coinsList: List<CoinUiState> = emptyList(),
 )
 
 data class CoinUiState(
     val name: String,
     val symbol: String,
     val priceInEuro: Double,
-    val changePercentage: String
+    val changePercentage: Double,
+    val changePercentFormatted: String,
 )
 
-fun Coin.toUiState(): CoinUiState = CoinUiState(
-    name = this.name,
-    symbol = this.symbol,
-    priceInEuro = this.priceInEuro,
-    changePercentage = this.changePercentFormatted
-)
+fun Coin.toUiState(): CoinUiState =
+    CoinUiState(
+        name = this.name,
+        symbol = this.symbol,
+        priceInEuro = this.priceInEuro,
+        changePercentage = this.changePercent,
+        changePercentFormatted = this.changePercentFormatted,
+    )

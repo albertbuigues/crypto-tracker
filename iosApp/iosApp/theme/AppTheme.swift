@@ -46,10 +46,10 @@ struct AppTypography {
     static let title = Font.system(size: 20, weight: .semibold, design: .default)
     
     /// Body Medium - Standard text (16sp, matching Android's bodyMedium)
-    static let bodyMedium = Font.system(size: 16, weight: .regular, design: .default)
+    static let bodyMedium = Font.system(size: 15, weight: .regular, design: .default)
     
     /// Body Small - Smaller text (14sp)
-    static let bodySmall = Font.system(size: 14, weight: .regular, design: .default)
+    static let bodySmall = Font.system(size: 13, weight: .regular, design: .default)
     
     /// Label - For buttons, chips, tags (14sp)
     static let label = Font.system(size: 14, weight: .medium, design: .default)

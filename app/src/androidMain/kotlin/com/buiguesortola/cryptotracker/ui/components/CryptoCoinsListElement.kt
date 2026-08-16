@@ -28,7 +28,8 @@ fun StatefulCryptoCoinsListElement(
     coinName: String,
     symbol: String,
     priceInEuro: String,
-    changePercentage: String,
+    changePercentage: Double,
+    changePercentageFormatted: String,
 ) {
     StatelessCryptoCoinsListElement(
         coinName,
@@ -43,10 +44,11 @@ private fun StatelessCryptoCoinsListElement(
     coinName: String = "Bitcoin",
     priceInEuro: String = "52000.20",
     symbol: String = "BTC",
-    changePercentage: String = "0.25",
+    changePercentage: Double = 0.25,
+    changePercentageFormatted: String = "0.25%",
 ) {
     val percentageColor =
-        if (changePercentage.removeSuffix("%").toDouble() > 0) {
+        if (changePercentage > 0) {
             PositiveGreen
         } else {
             NegativeRed
@@ -91,7 +93,7 @@ private fun StatelessCryptoCoinsListElement(
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                text = changePercentage,
+                text = changePercentageFormatted,
                 style = MaterialTheme.typography.bodyMedium,
                 color = percentageColor,
             )
