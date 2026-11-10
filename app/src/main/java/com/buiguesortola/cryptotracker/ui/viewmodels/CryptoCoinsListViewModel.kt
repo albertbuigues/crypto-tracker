@@ -12,7 +12,6 @@ import com.buiguesortola.cryptotracker.ui.states.UiState
 import com.buiguesortola.cryptotracker.ui.states.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -38,20 +37,10 @@ class CryptoCoinsListViewModel @Inject constructor(
     private fun fetchCryptoCoins(filter: Byte = TOP_TEN_FILTER) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
-            val startTime = System.currentTimeMillis()
 
             val result = if (filter == TOP_TEN_FILTER) getTopTenBestCoinsUseCase()
             else getWorstTenCoinsUseCase()
 
-            val endTime = System.currentTimeMillis()
-            val duration = endTime - startTime
-
-            if (duration < 500) {
-                // I've made this because when performance is excellent, the loader seems to
-                // be a flickering effect, but it's not, only the backend and compose are
-                // perfect performative
-                delay(500 - duration)
-            }
             result.fold(
                 onSuccess = { coins ->
                     val coinsToUiState = coins.map { it.toUiState() }

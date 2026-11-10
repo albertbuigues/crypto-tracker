@@ -15,7 +15,6 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -40,22 +39,20 @@ class CryptoCoinsListViewModelTests {
         getWorstTen = mockk()
     }
 
-    @Test
+@Test
     fun `when fetchCryptoCoins called then first state is Loading`() = runTest {
-        coEvery { getTopTen() } returns Result.success(emptyList())
+        coEvery { getTopTen() } coAnswers { Result.success(emptyList()) }
 
         initViewModel()
 
         viewModel.uiState.test {
-            assertEquals(
-                UiState.Loading, awaitItem()
-            )
+            assertEquals(UiState.Loading, awaitItem())
         }
     }
 
     @Test
     fun `fetchCryptoCoins should emit ShowNetworkError event when NetworkError is thrown`() = runTest {
-        coEvery { getTopTen() } returns Result.failure(CryptoError.NetworkError(""))
+        coEvery { getTopTen() } coAnswers { Result.failure(CryptoError.NetworkError("")) }
 
         initViewModel()
 
@@ -70,7 +67,7 @@ class CryptoCoinsListViewModelTests {
 
     @Test
     fun `fetchCryptoCoins should emit ShowEuroNotFoundError event when EuroNotFoundError is thrown`() = runTest {
-        coEvery { getTopTen() } returns Result.failure(CryptoError.EuroRateNotFoundError(""))
+        coEvery { getTopTen() } coAnswers { Result.failure(CryptoError.EuroRateNotFoundError("")) }
 
         initViewModel()
 
@@ -85,7 +82,7 @@ class CryptoCoinsListViewModelTests {
 
     @Test
     fun `fetchCryptoCoins should emit GenericError event when other error is thrown`() = runTest {
-        coEvery { getTopTen() } returns Result.failure(IOException(""))
+        coEvery { getTopTen() } coAnswers { Result.failure(IOException("")) }
 
         initViewModel()
 
@@ -108,14 +105,14 @@ class CryptoCoinsListViewModelTests {
             every { changePercent } returns 0.5
             every { changePercentFormatted } returns "0.5"
         }
-        coEvery { getTopTen() } returns Result.success(listOf(mockCoin))
+        coEvery { getTopTen() } coAnswers { Result.success(listOf(mockCoin)) }
 
         initViewModel()
 
         viewModel.uiState.test {
             assertEquals(UiState.Loading, awaitItem())
 
-            advanceTimeBy(550)
+            advanceUntilIdle()
             val success = awaitItem() as UiState.Success
 
             assertEquals(TOP_TEN_FILTER, success.content.selectedChip)
