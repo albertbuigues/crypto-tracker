@@ -76,15 +76,11 @@ A custom Gradle task has been created to execute all unit tests across all modul
 `./gradlew testAllModules`
 
 ## 5. Tech Stack
-* **Language:** Kotlin / Swift (KMP branch)
-* **UI:** Jetpack Compose (Material 3) / SwiftUI (KMP branch)
-* **DI:** Hilt (Android) / Koin (KMP)
-* **Networking:** Retrofit (Android) / Ktor (KMP)
+* **Language:** Kotlin
+* **UI:** Jetpack Compose (Material 3)
+* **DI:** Hilt
+* **Networking:** Retrofit
 * **Concurrency:** Kotlin Coroutines & Flow API
-* **KMP:** SKIE plugin for bridging Android to iOS (KMP branch)
-
-## 6. NEW: Migration to KMP
-I've added a feature/kmp-migration branch where the project is migrated to Kotlin Multiplatform to be executed on Android and iOS devices.
 
 ## 🎥 Demonstration
 
