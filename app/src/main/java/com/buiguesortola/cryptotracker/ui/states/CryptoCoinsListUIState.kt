@@ -1,10 +1,10 @@
 package com.buiguesortola.cryptotracker.ui.states
 
-import com.buiguesortola.cryptotracker.domain.TOP_TEN_FILTER
+import com.buiguesortola.cryptotracker.domain.CoinFilter
 import com.buiguesortola.cryptotracker.domain.models.Coin
 
 data class CryptoCoinsListUIState(
-    val selectedChip: Byte = TOP_TEN_FILTER,
+    val selectedChip: CoinFilter = CoinFilter.TOP_TEN,
     val coinsList: List<CoinUiState> = emptyList()
 )
 

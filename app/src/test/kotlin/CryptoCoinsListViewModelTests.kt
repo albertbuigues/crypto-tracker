@@ -1,11 +1,10 @@
 import app.cash.turbine.test
+import com.buiguesortola.cryptotracker.domain.CoinFilter
 import com.buiguesortola.cryptotracker.domain.CryptoError
-import com.buiguesortola.cryptotracker.domain.TOP_TEN_FILTER
-import com.buiguesortola.cryptotracker.domain.UiEvent
-import com.buiguesortola.cryptotracker.domain.WORST_TEN_FILTER
 import com.buiguesortola.cryptotracker.domain.models.Coin
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenBestCoinsUseCase
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenWorstCoinsUseCase
+import com.buiguesortola.cryptotracker.ui.events.UiEvent
 import com.buiguesortola.cryptotracker.ui.states.UiState
 import com.buiguesortola.cryptotracker.ui.viewmodels.CryptoCoinsListViewModel
 import io.mockk.coEvery
@@ -115,7 +114,7 @@ class CryptoCoinsListViewModelTests {
             advanceUntilIdle()
             val success = awaitItem() as UiState.Success
 
-            assertEquals(TOP_TEN_FILTER, success.content.selectedChip)
+            assertEquals(CoinFilter.TOP_TEN, success.content.selectedChip)
             assertEquals(1, success.content.coinsList.size)
             assertEquals("Bitcoin", success.content.coinsList[0].name)
 
@@ -132,7 +131,7 @@ class CryptoCoinsListViewModelTests {
 
         assertTrue(viewModel.uiState.value is UiState.Error)
 
-        viewModel.manageFilterState(WORST_TEN_FILTER)
+        viewModel.manageFilterState(CoinFilter.WORST_TEN)
         runCurrent()
 
         viewModel.uiState.test {
@@ -150,7 +149,7 @@ class CryptoCoinsListViewModelTests {
         initViewModel()
         advanceUntilIdle()
 
-        viewModel.manageFilterState(TOP_TEN_FILTER)
+        viewModel.manageFilterState(CoinFilter.TOP_TEN)
         runCurrent()
 
         coVerify(exactly = 1) { getTopTen() }
@@ -173,13 +172,13 @@ class CryptoCoinsListViewModelTests {
         initViewModel()
         advanceUntilIdle()
 
-        viewModel.manageFilterState(WORST_TEN_FILTER)
+        viewModel.manageFilterState(CoinFilter.WORST_TEN)
         advanceUntilIdle()
 
         coVerify(exactly = 1) { getTopTen() }
         coVerify(exactly = 1) { getWorstTen() }
 
-        viewModel.manageFilterState(TOP_TEN_FILTER)
+        viewModel.manageFilterState(CoinFilter.TOP_TEN)
         advanceUntilIdle()
 
         coVerify(exactly = 2) { getTopTen() }
@@ -202,7 +201,7 @@ class CryptoCoinsListViewModelTests {
         initViewModel()
         advanceUntilIdle()
 
-        viewModel.manageFilterState(WORST_TEN_FILTER)
+        viewModel.manageFilterState(CoinFilter.WORST_TEN)
         advanceUntilIdle()
 
         viewModel.refreshData()

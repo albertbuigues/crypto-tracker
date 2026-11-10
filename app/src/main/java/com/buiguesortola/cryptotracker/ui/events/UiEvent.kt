@@ -1,4 +1,4 @@
-package com.buiguesortola.cryptotracker.domain
+package com.buiguesortola.cryptotracker.ui.events
 
 sealed class UiEvent {
     object ShowNetworkError: UiEvent()

@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import com.buiguesortola.cryptotracker.domain.LOADING_TAG
+import com.buiguesortola.cryptotracker.testtags.LOADING_TAG
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 

@@ -2,11 +2,11 @@ package com.buiguesortola.cryptotracker.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buiguesortola.cryptotracker.domain.CoinFilter
 import com.buiguesortola.cryptotracker.domain.CryptoError
-import com.buiguesortola.cryptotracker.domain.TOP_TEN_FILTER
-import com.buiguesortola.cryptotracker.domain.UiEvent
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenBestCoinsUseCase
 import com.buiguesortola.cryptotracker.domain.usecases.GetTopTenWorstCoinsUseCase
+import com.buiguesortola.cryptotracker.ui.events.UiEvent
 import com.buiguesortola.cryptotracker.ui.states.CryptoCoinsListUIState
 import com.buiguesortola.cryptotracker.ui.states.UiState
 import com.buiguesortola.cryptotracker.ui.states.toUiState
@@ -34,11 +34,11 @@ class CryptoCoinsListViewModel @Inject constructor(
         fetchCryptoCoins()
     }
 
-    private fun fetchCryptoCoins(filter: Byte = TOP_TEN_FILTER) {
+    private fun fetchCryptoCoins(filter: CoinFilter = CoinFilter.TOP_TEN) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
 
-            val result = if (filter == TOP_TEN_FILTER) getTopTenBestCoinsUseCase()
+            val result = if (filter == CoinFilter.TOP_TEN) getTopTenBestCoinsUseCase()
             else getWorstTenCoinsUseCase()
 
             result.fold(
@@ -74,7 +74,7 @@ class CryptoCoinsListViewModel @Inject constructor(
         fetchCryptoCoins(currentState.content.selectedChip)
     }
 
-    fun manageFilterState(newSelectedFilter: Byte) {
+    fun manageFilterState(newSelectedFilter: CoinFilter) {
         val currentState = uiState.value
         if (currentState is UiState.Success) {
             val currentData = currentState.content

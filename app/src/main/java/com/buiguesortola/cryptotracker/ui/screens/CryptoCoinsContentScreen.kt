@@ -22,10 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.buiguesortola.cryptotracker.R
-import com.buiguesortola.cryptotracker.domain.FILTER_TOP_TAG
-import com.buiguesortola.cryptotracker.domain.FILTER_WORST_TAG
-import com.buiguesortola.cryptotracker.domain.TOP_TEN_FILTER
-import com.buiguesortola.cryptotracker.domain.WORST_TEN_FILTER
+import com.buiguesortola.cryptotracker.domain.CoinFilter
+import com.buiguesortola.cryptotracker.testtags.FILTER_TOP_TAG
+import com.buiguesortola.cryptotracker.testtags.FILTER_WORST_TAG
 import com.buiguesortola.cryptotracker.ui.components.StatefulCryptoCoinsListElement
 import com.buiguesortola.cryptotracker.ui.components.StatefulFilterChip
 import com.buiguesortola.cryptotracker.ui.states.CoinUiState
@@ -34,8 +33,8 @@ import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
 fun StatefulCryptoCoinsList(
-    selectedChip: Byte,
-    onChipSelected: (Byte) -> Unit,
+    selectedChip: CoinFilter,
+    onChipSelected: (CoinFilter) -> Unit,
     coinsList: List<CoinUiState>
 ) {
     StatelessCryptoCoinsList(selectedChip, onChipSelected, coinsList)
@@ -43,8 +42,8 @@ fun StatefulCryptoCoinsList(
 
 @Composable
 private fun StatelessCryptoCoinsList(
-    selectedChip: Byte = 0,
-    onChipSelected: (Byte) -> Unit = {},
+    selectedChip: CoinFilter = CoinFilter.TOP_TEN,
+    onChipSelected: (CoinFilter) -> Unit = {},
     coinsList: List<CoinUiState> = emptyList()
 ) {
     Column(
@@ -57,18 +56,18 @@ private fun StatelessCryptoCoinsList(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             StatefulFilterChip(
-                selected = selectedChip == TOP_TEN_FILTER,
+                selected = selectedChip == CoinFilter.TOP_TEN,
                 onClick = onChipSelected,
-                id = TOP_TEN_FILTER,
+                id = CoinFilter.TOP_TEN,
                 text = stringResource(R.string.best_coins),
                 leadingIconResId = R.drawable.arrow_up,
                 testTag = FILTER_TOP_TAG
             )
             Spacer(Modifier.width(8.dp))
             StatefulFilterChip(
-                selected = selectedChip == WORST_TEN_FILTER,
+                selected = selectedChip == CoinFilter.WORST_TEN,
                 onClick = onChipSelected,
-                id = WORST_TEN_FILTER,
+                id = CoinFilter.WORST_TEN,
                 text = stringResource(R.string.worst_coins),
                 leadingIconResId = R.drawable.arrow_down,
                 testTag = FILTER_WORST_TAG

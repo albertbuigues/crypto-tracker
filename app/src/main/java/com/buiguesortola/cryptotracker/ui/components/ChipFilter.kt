@@ -15,16 +15,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.buiguesortola.cryptotracker.R
+import com.buiguesortola.cryptotracker.domain.CoinFilter
 import com.buiguesortola.cryptotracker.ui.theme.PrimaryColor
 import com.buiguesortola.cryptotracker.ui.theme.SelectedAccent
 
 @Composable
 fun StatefulFilterChip(
     selected: Boolean,
-    onClick: (Byte) -> Unit,
+    onClick: (CoinFilter) -> Unit,
     text: String,
     leadingIconResId: Int,
-    id: Byte,
+    id: CoinFilter,
     testTag: String
 ) {
     StatelessFilterChip(
@@ -40,10 +41,10 @@ fun StatefulFilterChip(
 @Composable
 private fun StatelessFilterChip(
     selected: Boolean,
-    onClick: (Byte) -> Unit = {},
+    onClick: (CoinFilter) -> Unit = {},
     text: String = "Example",
     leadingIconResId: Int,
-    id: Byte = 0,
+    id: CoinFilter = CoinFilter.TOP_TEN,
     testTag: String = ""
 ) {
     FilterChip(

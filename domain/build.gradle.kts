@@ -1,47 +1,25 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
+    id("org.jetbrains.kotlin.jvm")
 }
 
-android {
-    namespace = "com.buiguesortola.cryptotracker.domain"
-    compileSdk = 35
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
-    defaultConfig {
-        minSdk = 26
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
+kotlin {
+    jvmToolchain(17)
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    // Dependency Injection
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // javax.inject for @Inject annotations (pure JVM, no Android)
+    implementation(libs.javax.inject)
     // Testing
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

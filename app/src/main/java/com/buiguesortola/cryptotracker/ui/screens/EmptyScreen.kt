@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiguesortola.cryptotracker.R
-import com.buiguesortola.cryptotracker.domain.EMPTY_SCREEN_BTN_TAG
-import com.buiguesortola.cryptotracker.domain.EMPTY_SCREEN_TAG
+import com.buiguesortola.cryptotracker.testtags.EMPTY_SCREEN_BTN_TAG
+import com.buiguesortola.cryptotracker.testtags.EMPTY_SCREEN_TAG
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 

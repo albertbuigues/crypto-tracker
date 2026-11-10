@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.buiguesortola.cryptotracker.domain.COINS_LIST_ELEM_TAG
+import com.buiguesortola.cryptotracker.testtags.COINS_LIST_ELEM_TAG
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 import com.buiguesortola.cryptotracker.ui.theme.NegativeRed
 import com.buiguesortola.cryptotracker.ui.theme.PositiveGreen

@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.buiguesortola.cryptotracker.R
-import com.buiguesortola.cryptotracker.domain.UiEvent
+import com.buiguesortola.cryptotracker.ui.events.UiEvent
 import com.buiguesortola.cryptotracker.ui.states.UiState
 import com.buiguesortola.cryptotracker.ui.theme.PrimaryColor
 import com.buiguesortola.cryptotracker.ui.viewmodels.CryptoCoinsListViewModel
