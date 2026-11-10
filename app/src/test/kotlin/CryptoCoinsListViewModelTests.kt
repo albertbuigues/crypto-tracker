@@ -21,6 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
+import java.math.BigDecimal
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CryptoCoinsListViewModelTests {
@@ -100,9 +101,8 @@ class CryptoCoinsListViewModelTests {
             every { id } returns "1"
             every { name } returns "Bitcoin"
             every { symbol } returns "BTC"
-            every { priceInEuro } returns 50000.0
+            every { priceInEuro } returns BigDecimal("50000.0")
             every { changePercent } returns 0.5
-            every { changePercentFormatted } returns "0.5"
         }
         coEvery { getTopTen() } coAnswers { Result.success(listOf(mockCoin)) }
 
@@ -162,9 +162,8 @@ class CryptoCoinsListViewModelTests {
             every { id } returns "1"
             every { name } returns "Bitcoin"
             every { symbol } returns "BTC"
-            every { priceInEuro } returns 50000.0
+            every { priceInEuro } returns BigDecimal("50000.0")
             every { changePercent } returns 0.5
-            every { changePercentFormatted } returns "0.5"
         }
         coEvery { getTopTen() } returns Result.success(listOf(mockCoin))
         coEvery { getWorstTen() } returns Result.success(listOf(mockCoin))
@@ -191,9 +190,8 @@ class CryptoCoinsListViewModelTests {
             every { id } returns "1"
             every { name } returns "Bitcoin"
             every { symbol } returns "BTC"
-            every { priceInEuro } returns 50000.0
+            every { priceInEuro } returns BigDecimal("50000.0")
             every { changePercent } returns 0.5
-            every { changePercentFormatted } returns "0.5"
         }
         coEvery { getTopTen() } returns Result.success(listOf(mockCoin))
         coEvery { getWorstTen() } returns Result.success(listOf(mockCoin))

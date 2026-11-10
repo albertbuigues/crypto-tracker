@@ -6,19 +6,20 @@ import com.buiguesortola.cryptotracker.domain.models.Coin
 import com.buiguesortola.cryptotracker.domain.repository.CryptosRepository
 import com.buiguesortola.cryptotracker.dto.toCoin
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
+import retrofit2.HttpException
+import kotlinx.serialization.SerializationException
 
 const val EURO_SYMBOL = "EUR"
 
 class CryptoRepositoryImpl @Inject constructor(
     private val api: CryptoApi,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher
 ): CryptosRepository {
 
     /**
@@ -45,7 +46,7 @@ class CryptoRepositoryImpl @Inject constructor(
                 val ratesResponse = ratesDeferred.await()
 
                 val euroRateUsd = ratesResponse.data
-                    .find { rate -> rate.symbol == EURO_SYMBOL }
+                    .find { rate -> rate.type == "fiat" && rate.symbol == EURO_SYMBOL }
                     ?.rateUsd?.toDoubleOrNull()
                     ?: return@coroutineScope Result.failure(
                         CryptoError.EuroRateNotFoundError("Euro rate not found")
@@ -58,11 +59,17 @@ class CryptoRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             val mappedError = when (e) {
+                is HttpException -> {
+                    CryptoError.NetworkError("HTTP error ${e.code()}: ${e.message()}")
+                }
+                is SerializationException -> {
+                    CryptoError.NetworkError("Invalid response format")
+                }
                 is IOException -> {
                     CryptoError.NetworkError("Check your internet connection: ${e.message}")
                 }
                 else -> {
-                    Exception(e.message)
+                    CryptoError.GenericError("Unexpected error: ${e.message}")
                 }
             }
             Result.failure(mappedError)

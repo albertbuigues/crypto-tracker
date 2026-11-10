@@ -17,6 +17,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CryptoRepositoryUnitTests {
@@ -60,7 +62,9 @@ class CryptoRepositoryUnitTests {
         val bitcoin = coins.find { it.id == "bitcoin" }
 
         assertNotNull(bitcoin)
-        assertEquals(69021.74, bitcoin?.priceInEuro ?: 0.0, 0.001)
+        // 63500 / 0.92 = 69021.73913... rounded to 2 decimals
+        val expectedPrice = BigDecimal("69021.74").setScale(2, RoundingMode.HALF_UP)
+        assertEquals(expectedPrice, bitcoin?.priceInEuro?.setScale(2, RoundingMode.HALF_UP))
     }
 
     @Test

@@ -30,6 +30,7 @@ import com.buiguesortola.cryptotracker.ui.components.StatefulFilterChip
 import com.buiguesortola.cryptotracker.ui.states.CoinUiState
 import com.buiguesortola.cryptotracker.ui.theme.BackgroundPrimaryColor
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
+import java.math.BigDecimal
 
 @Composable
 fun StatefulCryptoCoinsList(
@@ -83,8 +84,8 @@ private fun StatelessCryptoCoinsList(
                 StatefulCryptoCoinsListElement(
                     coinName = coin.name,
                     symbol = coin.symbol,
-                    priceInEuro = coin.priceInEuro.toString(),
-                    changePercentage = coin.changePercentage
+                    priceInEuro = coin.priceInEuro,
+                    changePercent = coin.changePercent
                 )
                 Spacer(Modifier.height(8.dp))
             }
@@ -102,16 +103,15 @@ private fun PreviewCoinsList() {
         ) {
             StatelessCryptoCoinsList(
                 coinsList = listOf(
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25"),
-                    CoinUiState("Bitcoin", "BTC", 52000.20, "0.25")
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25),
+                    CoinUiState("Bitcoin", "BTC", BigDecimal("52000.20"), 0.25)
                 )
             )
         }

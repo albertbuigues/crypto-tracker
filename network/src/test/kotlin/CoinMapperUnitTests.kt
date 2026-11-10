@@ -2,11 +2,12 @@ import com.buiguesortola.cryptotracker.dto.AssetDto
 import com.buiguesortola.cryptotracker.dto.toCoin
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.math.BigDecimal
 
 class CoinMapperUnitTests {
 
     @Test
-    fun `toCoin formats percentage to two decimals`() {
+    fun `toCoin converts price correctly and keeps raw change percent`() {
         val dto = AssetDto(
             id = "bitcoin",
             name = "Bitcoin",
@@ -17,7 +18,7 @@ class CoinMapperUnitTests {
         val euroRate = 0.92
         val coin = dto.toCoin(euroRate)
 
-        assertEquals(54348.43, coin.priceInEuro, 0.001)
-        assertEquals("2.57", coin.changePercentFormatted)
+        assertEquals(BigDecimal("54348.43"), coin.priceInEuro.setScale(2, BigDecimal.ROUND_HALF_UP))
+        assertEquals(2.5678, coin.changePercent, 0.0001)
     }
 }

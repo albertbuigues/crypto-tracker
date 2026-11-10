@@ -22,31 +22,41 @@ import com.buiguesortola.cryptotracker.testtags.COINS_LIST_ELEM_TAG
 import com.buiguesortola.cryptotracker.ui.theme.CryptoTrackerTheme
 import com.buiguesortola.cryptotracker.ui.theme.NegativeRed
 import com.buiguesortola.cryptotracker.ui.theme.PositiveGreen
+import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 @Composable
 fun StatefulCryptoCoinsListElement(
     coinName: String,
     symbol: String,
-    priceInEuro: String,
-    changePercentage: String
+    priceInEuro: BigDecimal,
+    changePercent: Double
 ) {
     StatelessCryptoCoinsListElement(
-        coinName, priceInEuro, symbol, changePercentage
+        coinName, priceInEuro, symbol, changePercent
     )
 }
 
 @Composable
 private fun StatelessCryptoCoinsListElement(
     coinName: String = "Bitcoin",
-    priceInEuro: String = "52000.20",
+    priceInEuro: BigDecimal = BigDecimal("52000.20"),
     symbol: String = "BTC",
-    changePercentage: String = "0.25"
+    changePercent: Double = 0.25
 ) {
-    val percentageColor = if (changePercentage.toDouble() > 0) {
-        PositiveGreen
-    } else {
-        NegativeRed
+    val priceFormat = NumberFormat.getCurrencyInstance(Locale.getDefault()).apply {
+        currency = Currency.getInstance("EUR")
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
     }
+    val percentFormat = NumberFormat.getPercentInstance(Locale.getDefault()).apply {
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
+    }
+    val percentageColor = if (changePercent > 0) PositiveGreen else NegativeRed
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +78,7 @@ private fun StatelessCryptoCoinsListElement(
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                text = priceInEuro,
+                text = priceFormat.format(priceInEuro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -86,7 +96,7 @@ private fun StatelessCryptoCoinsListElement(
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                text = "$changePercentage%",
+                text = percentFormat.format(changePercent / 100),
                 style = MaterialTheme.typography.bodyMedium,
                 color = percentageColor
             )

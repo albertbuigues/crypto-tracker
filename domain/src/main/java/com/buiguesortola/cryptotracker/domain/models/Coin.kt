@@ -1,5 +1,7 @@
 package com.buiguesortola.cryptotracker.domain.models
 
+import java.math.BigDecimal
+
 /**
  * Represents a coin asset with its market data for the UI.
  *
@@ -8,13 +10,11 @@ package com.buiguesortola.cryptotracker.domain.models
  * @property symbol Currency symbol (e.g., "BTC").
  * @property priceInEuro Current price converted to Euros.
  * @property changePercent Numeric 24h change for sorting purposes.
- * @property changePercentFormatted String representation of change (format: "xx.xx%").
  */
 data class Coin(
     val id: String,
     val name: String,
     val symbol: String,
-    val priceInEuro: Double,
-    val changePercent: Double,
-    val changePercentFormatted: String
+    val priceInEuro: BigDecimal,
+    val changePercent: Double
 )

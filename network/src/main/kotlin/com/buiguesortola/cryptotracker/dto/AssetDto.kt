@@ -2,7 +2,9 @@ package com.buiguesortola.cryptotracker.dto
 
 import com.buiguesortola.cryptotracker.domain.models.Coin
 import kotlinx.serialization.Serializable
-import java.util.Locale
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
 @Serializable
 data class AssetDto(
@@ -17,21 +19,20 @@ data class AssetDto(
  * Maps an Asset DTO object to a Domain Model ([Coin]).
  *
  * @param euroConversionRateToUsd The current conversion rate (how many USD per 1 EUR).
- * * Performs the currency conversion from USD to EUR and formats the 24h change
- * percentage to a two-decimal string (e.g., "1.23%") as required by the README
- * specifications using [java.util.Locale.ROOT] to ensure consistent formatting.
+ * Performs the currency conversion from USD to EUR using BigDecimal for precision.
  */
 fun AssetDto.toCoin(euroConversionRateToUsd: Double): Coin {
-    val usdPrice = priceUsd.toDoubleOrNull() ?: 0.0
+    val usdPrice = priceUsd.toBigDecimalOrNull() ?: BigDecimal.ZERO
     val percent = changePercent24Hr.toDoubleOrNull() ?: 0.0
-    val priceInEur = usdPrice / euroConversionRateToUsd
+    val rate = BigDecimal.valueOf(euroConversionRateToUsd)
+    val mc = MathContext(8, RoundingMode.HALF_UP)
+    val priceInEur = usdPrice.divide(rate, mc)
 
     return Coin(
         id = id,
         name = name,
         symbol = symbol,
         priceInEuro = priceInEur,
-        changePercent = percent,
-        changePercentFormatted = String.format(Locale.ROOT, "%.2f", percent)
+        changePercent = percent
     )
 }
