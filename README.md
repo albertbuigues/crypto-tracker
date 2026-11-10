@@ -66,7 +66,7 @@ By using **Jetpack Compose**:
 * **Stateful vs Stateless:** All UI components follow the State Hoisting pattern, strictly separating logic from rendering to improve reusability and testability.
 
 ### 🛡️ Use Case Granularity
-Instead of a single large Use Case, I implemented specific ones for each filter (Best, Worst, All).
+Instead of a single large Use Case, I implemented specific ones for each filter (Best, Worst).
 * **Why:** This follows the **Single Responsibility Principle (SRP)** and makes Unit Testing significantly easier, as each sorting/filtering logic can be tested in isolation.
 
 ---
@@ -85,7 +85,7 @@ A custom Gradle task has been created to execute all unit tests across all modul
 * SKIE plugin for bridging Android to iOS environment
 
 ## 6. NEW: Migration to KMP
-I've added a feature/kmp-migration where the project is migrated to Kotlin Multiplatform to be executed on Android and iOS devices.
+I've added a feature/kmp-migration branch where the project is migrated to Kotlin Multiplatform to be executed on Android and iOS devices.
 
 ## 🎥 Demonstration
 
