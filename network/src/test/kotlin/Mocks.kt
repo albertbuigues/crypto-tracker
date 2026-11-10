@@ -16,11 +16,15 @@ private fun createFakeAssetDto(
 
 private fun createFakeRateDto(
     symbol: String = "EUR",
-    rateUsd: String = "0.92"
+    rateUsd: String = "0.92",
+    type: String = "fiat",
+    currencySymbol: String = "€"
 ) = RateDto(
     id = "euro",
     symbol = symbol,
-    rateUsd = rateUsd
+    rateUsd = rateUsd,
+    currencySymbol = currencySymbol,
+    type = type
 )
 
 fun createFakeAssetsList() = listOf(
