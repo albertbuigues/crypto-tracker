@@ -26,7 +26,7 @@ tasks.register("testAllModules") {
 
     subprojects.forEach { project ->
         project.tasks.configureEach {
-            if (name == "testDebugUnitTest") {
+            if (name == "testDebugUnitTest" || name == "test") {
                 this@register.dependsOn(this)
             }
         }

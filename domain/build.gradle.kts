@@ -17,6 +17,7 @@ dependencies {
     // Testing
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
+    testRuntimeOnly(libs.junit.vintage)
     testImplementation(libs.mockk)
 }
 
